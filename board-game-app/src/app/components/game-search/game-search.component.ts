@@ -1,0 +1,67 @@
+import { Component, OnInit } from '@angular/core';
+import { Game } from 'src/app/interfaces/game';
+import { ListType } from 'src/app/list-type';
+import { GameService } from 'src/app/services/game.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
+import * as _ from 'lodash';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-game-search',
+  templateUrl: './game-search.component.html',
+  styleUrls: ['./game-search.component.scss']
+})
+export class GameSearchComponent implements OnInit {
+  searchText!: string;
+
+  games: Game[] = [];
+  ownedGames: { [id: string]: Game } = {};
+  wishListGames: { [id: string]: Game } = {};
+
+  constructor(
+    private gameService: GameService,
+    private localStorageService: LocalStorageService,
+    private router: Router,
+
+  ) { }
+
+  ngOnInit(): void {
+    this.localStorageService.getGameList(ListType.OWNEDLIST);
+    this.localStorageService.getGameList(ListType.WISHLIST);
+
+    this.localStorageService.ownedGames.subscribe(games => this.ownedGames = _.mapKeys(games, 'id'));
+    this.localStorageService.wishListGames.subscribe(games => this.wishListGames = _.mapKeys(games, 'id'));
+  }
+  search() {
+    this.gameService.searchByName(this.searchText).subscribe(games => this.games = games);
+  }
+
+  updateOwnedList(event: MouseEvent, game: Game) {
+    event.stopPropagation();
+
+    if (this.ownedGames[game.id]) {
+        this.localStorageService.deleteGame(game, ListType.OWNEDLIST);
+    } else {
+        if (this.wishListGames[game.id]) {
+            this.localStorageService.deleteGame(game, ListType.WISHLIST);
+        }
+        this.localStorageService.saveGame(game, ListType.OWNEDLIST);
+    }
+}
+
+updateWishlist(event: MouseEvent, game: Game) {
+    event.stopPropagation();
+
+    if (this.wishListGames[game.id]) {
+        this.localStorageService.deleteGame(game, ListType.WISHLIST);
+    } else {
+        if (this.ownedGames[game.id]) {
+            this.localStorageService.deleteGame(game, ListType.OWNEDLIST);
+        }
+        this.localStorageService.saveGame(game, ListType.WISHLIST);
+    }
+}
+goToGameDetails(game: Game) {
+  this.router?.navigate(['./game-details', { gameId: game.id }] );
+}
+}

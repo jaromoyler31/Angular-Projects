@@ -1,0 +1,67 @@
+.main-container {
+    padding: 50px;
+}
+
+.details-container {
+    display: flex;
+    & > img {
+      width: 30%;
+      height: auto;
+      object-fit: contain
+    }
+
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.sideInfo {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    text-align: left;
+}
+
+.title {
+    font-size: 40px;
+    font-weight: bold;
+    display: flex;
+
+    div {
+        margin-right: 5px;
+    }
+}
+
+.rowData {
+    display: flex;
+    font-size: 15px;
+    padding-bottom:5px;
+}
+
+.columnData {
+    display: flex;
+    flex-direction: column;
+    font-size: .75em;
+    line-height: normal;
+}
+
+.topMargin {
+    margin-top: 16px;
+}
+
+.subTitle {
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.artistContainer {
+    display: flex;
+    max-width: 300px;
+    font-size: 15px;
+    padding-bottom:5px;
+}
+
+.artist {
+    white-space: nowrap;
+    margin-right: 4px;
+}
+
