@@ -28,16 +28,16 @@ export class TimesheetComponent {
     private route: ActivatedRoute,
     private departmentsService: DepartmentsService,
     private employeeService: EmployeeService,
-    private router:Router
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.$departments = this.departmentsService.getDepartments();
 
     this.$departments.subscribe(x => {
-        this.department = x.find(dept => dept.id === this.route.snapshot.params['id'])
+      this.department = x.find(dept => dept.id === this.route.snapshot.params['id'])
     });
-}
+  }
   addEmployee(): void {
     if (this.employeeNameFC.value) {
       this.employeeId++;
@@ -84,8 +84,8 @@ export class TimesheetComponent {
       this.employeeService.saveEmployeeHours(employee);
     });
 
-    this.router.navigate(['./departments'] );
-}
+    (<any>this.router)?.navigate(['./departments']);
+  }
 
 }
 
