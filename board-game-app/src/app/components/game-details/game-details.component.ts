@@ -38,7 +38,8 @@ export class GameDetailsComponent implements OnInit {
 
     this.localStorageService.ownedGames.subscribe(games => this.ownedGames = _.mapKeys(games, 'id'));
     this.localStorageService.wishListGames.subscribe(games => this.wishListGames = _.mapKeys(games, 'id'));
-
+    }
+    
     setGameList(listType: ListType) {
       if (listType === ListType.OWNEDLIST) {
         if (this.ownedGames[this.game.id]) {
@@ -61,5 +62,5 @@ export class GameDetailsComponent implements OnInit {
       }
     }
 
-  }
+  
 }
