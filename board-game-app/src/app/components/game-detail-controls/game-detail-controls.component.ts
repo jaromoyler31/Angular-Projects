@@ -8,7 +8,7 @@ import { ListType } from 'src/app/list-type';
   styleUrls: ['./game-detail-controls.component.scss']
 })
 export class GameDetailControlsComponent {
-  @Input() game: Game | undefined;
+  @Input() game!: Game;
   @Input() ownedGames: { [id: string]: Game } = {};
   @Input() wishListGames: { [id: string]: Game } = {};
   

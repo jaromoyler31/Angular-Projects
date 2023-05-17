@@ -3,23 +3,25 @@
         <mat-form-field appearance="outline" class="textinput">
             <input matInput type="text" [(ngModel)]="searchText" placeholder="Search for games" />
         </mat-form-field>
-        
+
         <button mat-raised-button color="primary" (click)="search()">Search</button>
     </div>
 
     <div class="searched-games">
-        <mat-card class="game-card" *ngFor="let game of games" (click)="goToGameDetails(game)"
-        >
+        <mat-card class="game-card" *ngFor="let game of games" (click)="goToGameDetails(game)">
             <div class="card-title-container">
+                <mat-icon *ngIf="ownedGames[game.id]" class="material-icons-outlined selected-icon">verified</mat-icon>
+                <mat-icon *ngIf="wishListGames[game.id]" class="selected-icon">switch_access_shortcut</mat-icon>
                 <mat-card-title class="tittleCard">{{game?.name}}</mat-card-title>
-                
+
             </div>
             <img mat-card-image [src]="game?.images?.medium">
             <mat-card-content>
                 <div>{{game?.description_preview | slice: 0:80}} ...</div>
             </mat-card-content>
             <mat-card-actions>
-                <button mat-mini-fab color="primary" matTooltip="Add to list of owned games" (click)="updateOwnedList($event, game)">
+                <button mat-mini-fab color="primary" matTooltip="Add to list of owned games"
+                    (click)="updateOwnedList($event, game)">
                     <mat-icon class="material-icons-outlined">verified</mat-icon>
                 </button>
                 <button mat-mini-fab matTooltip="Add to wishlist" (click)="updateWishlist($event, game)">
